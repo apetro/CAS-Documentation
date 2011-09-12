@@ -1,6 +1,6 @@
 # What is Jasig CAS? #
 
-![Big picture diagram](https://github.com/apetro/CAS-Documentation/raw/master/media/sso-diagram.png)
+![Big picture diagram](../../media/sso-diagram.png)
 
 CAS is a multiprotocol Web single sign-on (SSO) product composed of a single logical server component that services authentication requests from multiple CAS clients that communicate via one or more supported protocols. The CAS server delegates authentication decisions to any number of supported authentication mechanisms including LDAP/Active Directory, Kerberos, and RDBMS. The hallmark of CAS is ease of integration and extension in support of a wide variety of environments. In addition to supporting a large number of technologies out of the box, the well-documented API extension points have enabled deployers to develop custom components to support novel use cases not supported by default.
 
