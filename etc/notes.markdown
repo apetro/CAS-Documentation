@@ -34,4 +34,13 @@ Here's an example of using an <img> tag referencing a raw image. <https://raw.gi
 
 Looks like Github can host website in a magic gh-site folder.  Process to build from Markdown documentation source to static HTML and sync into a gh-site directory so that Github itself hosts the built CAS documentation?
 
+# Helpful #
+
+[Daring Fireball Markdown syntax guide]
+
+
+
+[Daring Fireball Markdown syntax guide]: http://daringfireball.net/projects/markdown/syntax
+
+
 
