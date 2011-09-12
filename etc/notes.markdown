@@ -7,6 +7,9 @@ First are the known issues. Then are notes with links.
 1. Image inluded but appears in the wrong spot in the generated PDF.
 2. Font not available on all OSs
 
+# Starting point #
+
+Based on  <https://github.com/progit>
 
 # Font #
 
