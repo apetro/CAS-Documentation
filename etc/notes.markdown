@@ -6,6 +6,13 @@ First are the known issues. Then are notes with links.
 
 1. Image inluded but appears in the wrong spot in the generated PDF.
 2. Font not available on all OSs
+3. The unpaired header indicator format *doesn't work* for h4 and h5 in the PDF generation.  That is
+
+     #### This heading will render properly in PDF ####
+
+works, whereas
+
+     #### This heading looks bad in PDF
 
 # Starting point #
 
@@ -36,6 +43,22 @@ Here's an example of using an <img> tag referencing a raw image. <https://raw.gi
 # Hosting of static documentation site #
 
 Looks like Github can host website in a magic gh-site folder.  Process to build from Markdown documentation source to static HTML and sync into a gh-site directory so that Github itself hosts the built CAS documentation?
+
+# Fighting with Latex #
+
+When the makepdfs script fails, then I run the makepdf script in the latex directory, as in
+
+    makepdf en -d
+
+With that debug flag, usually get worthwhile debug output as to what the problem is.
+
+## Backslashes ##
+
+So far, the problem has been unescaped backslashes, as in documentation of setting paths in Windows.  Again, backslashes as path delimiter in Windows was an incredibly bad idea.  (Does Windows now accept forward-slash delimited paths sufficiently well that the documentation could simply use that and avoid the pain?)
+
+Note that these are problems in the makepdfs build (in Latex) rather than in Markdown itself -- Markdown and Github seem perfectly happy to cope with backslashes in the content.
+
+
 
 # Helpful #
 
