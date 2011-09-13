@@ -93,15 +93,11 @@ CAS includes a JPA services registry implementation that stores service registra
 
 CAS includes a Web-based administrative UI for managing service registrations.
 
-### Accessing the Services Management UI ### 
-
 First we'll configure the URLs associated with the services management UI and authorize a user to access it.  Then we'll actually access it.
 
-#### Configuring Access to Services Management UI #### 
 
-Configuring access to the services management Web-based administrative UI requires both configuring at what URL this application is available and selecting which accounts are permitted to access it.
 
-##### Configuring URLs to the Services Management UI in cas.properties #####
+### Configuring URLs to the Services Management UI in cas.properties ###
 
 __Tip__: If your CAS server is deployed to http://localhost:8080 (as in, say, you've naively deployed CAS to an unconfigured Tomcat instance installed on your local computer) and you're not yet using SSL, then you need not change any of the _cas.properties_ properties.
 
@@ -139,7 +135,7 @@ Notice that only server.prefix changed. That's the intended convenience of serve
 
 __Note:__  As in the example, you'll need to change these URLs if they differ in your environment, i.e. if you're accessing CAS at a host other than localhost or a port other than 8443.
 
-#### Authorizing users to access the Services Management tool ####
+### Authorizing users to access the Services Management tool ###
 
 By default, no users can access the CAS management UI.
 
@@ -158,11 +154,11 @@ The services registry has only one role, but the key of that role is configured 
 
 Usernames enumerated in the user details service with authority ROLE_ADMIN will be able to access the Services Registry interface. All other users will be denied access.
 
-#### URL to the Services Management UI ####
+### URL to the Services Management UI ###
 
 The CAS Services Management UI is available at the path /services/ within your CAS server. If your CAS webapp is named "cas" and you've deployed it at http://localhost:8080, then the URL to the CAS server services management UI is http://localhost:8080/cas/services or, if you're using SSL, https://localhost:8443/cas/services .
 
-### Managing Registered Services ###
+### Using the Web-based services registry administrative UI ###
 
 Once you reach the Services Registry, it looks like this:
 
@@ -174,9 +170,7 @@ The front page of the services registry lists the existing service registrations
 
 You can delete an existing service registration from this summary screen.
 
-##### There's no undo #####
-
-If you delete a registration, it's gone.
+__There's no undo.__ If you delete a registration, it's gone.
 
 #### Registering a New Service #### 
 
