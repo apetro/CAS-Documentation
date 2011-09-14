@@ -52,6 +52,8 @@ Set this to whatever saner timeout you'd like, in milliseconds, being appropriat
 
     networkaddress.cache.ttl=14400
 
+(See also the [JavaDoc for Java 6 InetAddress].)
+
 _Editorial note: Does this belong in the Hardening chapter, or would this go into the high availability chapter when discussing DNS role in HA?_
 
-
+[JavaDoc for Java 6 InetAddress]: http://download.oracle.com/javase/6/docs/api/java/net/InetAddress.html
