@@ -74,6 +74,10 @@ Use [PerlCAS].
 
 PerlCAS is not vended by Jasig.
 
+#### IMAP Server ####
+
+It may be feasible to use the pam\_cas module, depending upon whether your IMAP server supports delegation to a pam module and is running on an OS affording pam module plugin points.
+
 
 ### Authentication ###
 
