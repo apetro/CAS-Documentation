@@ -9,7 +9,7 @@ The CAS server and clients comprise the two physical components of the CAS syste
 
 ### CAS Server ##
 
-The CAS server application is Java servlet built on the Spring Framework whose primary responsibility is to authenticate users and grant access to CAS-enabled services, commonly called CAS clients, by issuing and validating tickets. An SSO session is created when the server issues a ticket-granting ticket (TGT) to the user upon successful login. A service ticket (ST) is issued to a service at the user's request via browser redirects using the TGT as a token. The ST is subsequently validated at the CAS server via back-channel communication. These interactions are described in great detail in the [CAS Protocol document].
+The CAS server application is a Java servlet, built on the Spring Framework, whose primary responsibility is to authenticate users and grant access to CAS-enabled services, commonly called CAS clients, by issuing and validating tickets. An SSO session is created when the server issues a ticket-granting ticket (TGT) to the user upon successful login. A service ticket (ST) is issued to a service at the user's request via browser redirects using the TGT as a token. The ST is subsequently validated at the CAS server via back-channel communication. These interactions are described in great detail in the [CAS Protocol document].
 
 ### CAS Clients ###
 
@@ -38,11 +38,11 @@ Examples of some applications that can be CASified, that is, made to acts as cli
 * Outlook Web Application (via ClearPass Extension and .NET CAS Client)
 * uPortal (via built-in support)
 
-When the term "CAS client" appears in this manual without further qualification, it refers to the integration components such as the Jasig Java CAS Client rather than to the application relying upon (a client of) the CAS server.</para>
+When the term "CAS client" appears in this manual without further qualification, it refers to any successful CAS protocol integration (such as the Jasig Java CAS Client) rather than to an application relying upont (a client of) the CAS server.</para>
 
 ## Protocols ##
 
-Clients communicate with the server by any of several supported protocols.  All the supported protocols are conceptually similar, yet some have features or characteristics that make them desirable for particular applications or use cases. For example, the CAS protocol supports delegated (proxy) authentication, and the SAML protocol supports attribute release and single sign-out.
+Clients communicate with the server by any of several supported protocols.  The supported protocols are conceptually similar, yet some have features or characteristics that make them desirable for particular applications or use cases. For example, the CAS protocol supports delegated (proxy) authentication, and the SAML protocol supports attribute release and single sign-out.
 
 ### CAS Protocol ###
 
@@ -50,9 +50,9 @@ The CAS protocol is a simple and powerful ticket-based protocol developed exclus
 
 #### CAS protocols shared across CAS software versions ####
 
-The CAS 3.4 server software speaks the CAS 1 and CAS 2 protocols.  Integrations with CAS via the CAS protocol should be independent of particular versions of the CAS server software.  That is, client libraries should work with CAS, not merely work with some particular version of the CAS server software, by virtue of these protocols remaining unchanged across CAS 2 and CAS 3 versions.  CAS server 3.4 (which this manual documents) speaks the same CAS protocol that CAS 3.3, 3.2, 3.1, 3.0, and even Yale CAS Server 2 versions speak, and so client libraries shouldn't need to or even be able to differentiate among these.
+The CAS 3.4 server software speaks the CAS 1 and CAS 2 protocols.  Generally, integrations via the CAS protocol should be independent of versions of the CAS server software.  Client libraries should work across versions of the CAS server software since these protocols remain unchanged across levels 2 and 3 of the CAS Server software.  CAS server 3.4 (which this manual documents) speaks the same CAS protocol as CAS 3.3, 3.2, 3.1, 3.0, and even Yale CAS Server 2 versions, so client libraries should be compatible.  
 
-Additional features not originally in the CAS protocol have been added (such as single logout callbacks), but support for the CAS protocol as defined remains.
+Additional features not originally in the CAS protocol have been added (such as single logout callbacks), but support for the CAS protocol as defined is consistent.
 
 ### SAML ###
 
@@ -69,15 +69,22 @@ CAS provides limited support for the SAML2 protocol.
 
 ### OpenID ###
 
-The CAS server has limited support for acting as an OpenID identity provider, which allows integration with applications and services such as Google Apps and Salesforce.com. The OpenID protocol spefication is maintained as [a set of specifications for different protocol aspects](http://openid.net/developers/specs/).
+The CAS server has limited support for acting as an OpenID identity provider that allows integration with applications and services such as Google Apps and Salesforce.com. The OpenID protocol spefication is maintained as [a set of specifications for different protocol aspects](http://openid.net/developers/specs/).
 
 ## Server Software Components ##
 
-In order to facilitate discussion of configuration and deployment in following chapters, it is helpful to provide an overview of server software components. CAS server software components are described in terms of Java interfaces that form an API that organizes the application source code and provides configuration and extension points for deployers. The following sections discuss the core interfaces of the CAS server API.
+At this point, an overview oft he server software components will help clarify configuration and deployment in the chapters that follow. 
+A Java API:
+
+* defines the CAS software components
+* logically organizes the source code, and 
+* provides configuration and extension point for deployers
+
+The following sections discuss the core interfaces of the CAS server API.
 
 ### Authentication ###
 
-CAS supports two distinct notions of authentication, user and service authentication. For the purposes of this user manual, "authentication" means user authentication where a user presents some credential(s) for CAS to validate. The service authentication process will be referred to as an "access." There are a number of components that deal with user authentication that are described in detail in the following sections. _Editorial note: Does this documentation consistently use 'access' in this way?  May need to keep an eye on this._
+CAS supports two distinct notions of authentication, user and service authentication. For the purposes of this user manual, "authentication" means user authentication where a user presents some credential(s) to CAS for validation. The service authentication process will be referred to as an "access." There are a number of components that deal with user authentication that are described in detail in the following sections. _Editorial note: Does this documentation consistently use 'access' in this way?  May need to keep an eye on this._
 
 #### Principal Name Transformer ####
 
@@ -85,23 +92,23 @@ The PrincipalNameTransformer interface allows customization of the provided user
 
 #### Authentication Handlers ####
 
-The AuthenticationHandler interface describes the contract by which users present credentials for validation and simply return a boolean true/false value for success/failure. Authentication handlers are the integration point with identity management systems including directories and databases.
+The AuthenticationHandler interface describes the contract by which users present credentials for validation and a boolean true/false value for success/failure is returned. Authentication handlers are the integration point with identity management systems including directories and databases.
 
 #### Authentication Managers ####
 
 The AuthenticationManager interface describes the strategy by which AuthenticationHandlers will be evaluated to determine authentication success or failure.
 
-#### Authentication Meta Data Populators ####
+#### Authentication MetaData Populators ####
 
-The AuthenticationMetaDataPopulator interface supports adding arbitrary meta data to the CAS authentication event. A common use case would be to store the authentication method or level of assurance of the user's credential.
+The AuthenticationMetaDataPopulator interface supports adding arbitrary metadata to the CAS authentication event. A common use case would be to store the authentication method or level of assurance of the user's credential.
 
 ### Principal ###
 
-A principal describes an authenticated user, including a unique identifier over one or more identity management systems. The principal may also contain arbitrary attributes describing the user, such as display name and security groups. These attributes may used to facilitate authorization and personalization in CAS client applications using CAS via protocols that convey user attributes.
+A principal describes an authenticated user, including a unique identifier across one or more identity management systems. The principal may also contain arbitrary attributes describing the user, such as display name and security groups. These attributes may used to facilitate authorization and personalization in CAS client applications using CAS via protocols that convey user attributes.
 
 #### Credential-to-Principal Resolver ####
 
-Upon successful authentication, CAS relies upon a CredentialsToPrincipalResolver to map the succesfully authenticating credentials onto a principal. A CredentialToPrincipalResolver might be trivial in the common use case of relying upon the username of a correct username/password pair, or a CredentialToPrincipalResolver in principle might be more sophisticated in mapping authenticated credentials to a namespace.
+Upon successful authentication, CAS relies upon a CredentialsToPrincipalResolver to map the succesfully authenticating credentials onto a principal. A CredentialToPrincipalResolver may be trivial in the common use case of relying upon the username of a correct username/password pair, or a CredentialToPrincipalResolver may be more sophisticated in mapping authenticated credentials to a namespace.
 
 ### Security Policy ###
 
@@ -109,7 +116,7 @@ CAS provides a number of configurable and extensible components to control vario
 
 #### Services Registry ####
 
-The ServiceRegistry component is responsible for defining the allowed services that may request and validate tickets provided by CAS as well as other service-specific concerns:
+The ServiceRegistry component is responsible for defining the services that are allowed to request and validate tickets provided by CAS.  Through the ServiceRegistry interface, the following service-specific characteristics are defined:
 
 * Authorization to perform delegated authentication (proxy)
 * Attribute release policy
@@ -120,7 +127,7 @@ The ServiceRegistry component is responsible for defining the allowed services t
 
 The TicketExpirationPolicy component defines the lifecycle policy for various types of tickets.
 
-Expiration policies support finite timeout expiration, sliding scale expiration, limiting  ticket to N uses, and everlasting tickets. The policy contract is simple to facilitate development of custom policies.
+Expiration policies support finite timeout expiration, sliding scale expiration, usage count expiration, and non-expiring tickets. The policy contract is simple to facilitate development of custom policies.
 
 #### Identifier Generators ####
 
